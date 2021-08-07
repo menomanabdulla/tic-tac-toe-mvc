@@ -128,11 +128,11 @@ const appController = (( gameCtrl, UICtrl ) => {
          gameCtrl.setPlayer();
 
          //Display Plyer Turn
-         UICtrl.displayGameStatus(gameCtrl.getPlayer()+ ' \'s turn');
+         UICtrl.displayGameStatus('Player ' + gameCtrl.getPlayer()+ ' \'s turn');
 
         //Check match win or drawn
         if(result.isWin){
-            UICtrl.displayGameStatus(result.winigPlayer + ' is win');
+            UICtrl.displayGameStatus('Player ' + result.winigPlayer + ' is win');
         }else if(result.isDrawn){
             UICtrl.displayGameStatus('Game is Drawn');
         }
@@ -143,7 +143,7 @@ const appController = (( gameCtrl, UICtrl ) => {
         //Reset gameController
         gameCtrl.resetGame();
         //Update UI
-        UICtrl.displayGameStatus(gameCtrl.getPlayer()+ ' \'s turn');
+        UICtrl.displayGameStatus('Player ' + gameCtrl.getPlayer()+ ' \'s turn');
         UICtrl.elementSelectAll(UICtrl.domSelectors.cell).forEach( item => {
             item.textContent = "";
         })
@@ -163,7 +163,7 @@ const appController = (( gameCtrl, UICtrl ) => {
         inte: () => {
             console.log('Application initilize')
             events();
-            UICtrl.displayGameStatus(gameCtrl.getPlayer() + ' \'s turn');
+            UICtrl.displayGameStatus('Player ' + gameCtrl.getPlayer() + ' \'s turn');
         }
     }
 })(gameController, UIController)
