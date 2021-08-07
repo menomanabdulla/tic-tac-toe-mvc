@@ -1,7 +1,6 @@
 
 // Game-Controller
 const gameController = (() => {
-
     const data = {
         gameScore:  ["","","","","","","","",""],
         winigConditions: [
@@ -63,6 +62,13 @@ const gameController = (() => {
                 winigPlayer: data.winigPlayer
             }
 
+        },
+        resetGame: _ => {
+            data.gameScore = ["","","","","","","","",""];
+            data.currentPlayer= 'X';
+            data.winigPlayer= null;
+            data.isWin= false;
+            data.isDrawn= false;
         }
     }
 })()
@@ -73,7 +79,7 @@ const UIController = (() => {
     const domSelectors ={
         cell: '.cell',
         gameStatus: '.game--status',
-        gameRestart: '.game-restart'
+        gameRestart: '.game--restart'
     }
 
     const elementSelectAll = (selector) => {
@@ -103,6 +109,7 @@ const UIController = (() => {
     }
 })()
 
+
 //App-Controller
 const appController = (( gameCtrl, UICtrl ) => {
 
@@ -129,6 +136,17 @@ const appController = (( gameCtrl, UICtrl ) => {
         }else if(result.isDrawn){
             UICtrl.displayGameStatus('Game is Drawn');
         }
+    }
+
+    const handleReset = () => {
+
+        //Reset gameController
+        gameCtrl.resetGame();
+        //Update UI
+        UICtrl.displayGameStatus(gameCtrl.getPlayer()+ ' \'s turn');
+        UICtrl.elementSelectAll(UICtrl.domSelectors.cell).forEach( item => {
+            item.textContent = "";
+        })
 
 
     }
@@ -137,6 +155,8 @@ const appController = (( gameCtrl, UICtrl ) => {
         UICtrl.elementSelectAll(UICtrl.domSelectors.cell).forEach( item => {
             item.addEventListener('click', handleCellClick)
         })
+
+        UICtrl.elementSelect(UICtrl.domSelectors.gameRestart).addEventListener('click', handleReset);
     }
 
     return{
@@ -144,7 +164,6 @@ const appController = (( gameCtrl, UICtrl ) => {
             console.log('Application initilize')
             events();
             UICtrl.displayGameStatus(gameCtrl.getPlayer() + ' \'s turn');
-            
         }
     }
 })(gameController, UIController)
